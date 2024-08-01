@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Author;
+use App\Models\Book;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
@@ -26,25 +28,32 @@ class ParseBook extends Command
      */
     public function handle()
     {
-        $params = [
-            'q' => 'book', // Пошуковий запит, ви можете змінити його на свій смак
-            'limit' => 2, // Кількість книг для отримання
-            'offset' => 0, // Кількість книг для отримання
-        ];
+        for ($i = 0; $i < 10; $i++) {
+            $params = [
+                'q'      => 'book',
+                'limit'  => 10,
+                'offset' => 0,
+            ];
 
-        // URL Open Library API для отримання всіх книг
-        $url = 'https://openlibrary.org/search.json';
+            $url = 'https://openlibrary.org/search.json';
 
-        // Виконання GET-запиту до API
-        $response = Http::get($url, $params);
+            $response = Http::get($url, $params);
 
-        // Перевірка на успішність запиту
-        if ($response->successful()) {
-            // Повертаємо дані у форматі JSON
-            return response()->json($response->json());
+            if ($response->successful()) {
+                $result = $response->json();
+
+                foreach ($result['docs'] as $item) {
+                    $author = Author::firstOrCreate([
+                        'full_name' => $item['author_name'][0] ?? '',
+                    ]);
+
+                    Book::updateOrCreate([
+                        'author_id' => $author->id,
+                        'title'     => $item['title'],
+                        'url'       => $item['cover_i'] ? "https://covers.openlibrary.org/b/id/{$item['cover_i']}-M.jpg" : null,
+                    ]);
+                }
+            }
         }
-
-        // Якщо запит не успішний, повертаємо помилку
-        return response()->json(['error' => 'Unable to fetch books'], 500);
     }
 }
