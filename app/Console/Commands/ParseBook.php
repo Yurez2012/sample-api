@@ -28,32 +28,37 @@ class ParseBook extends Command
      */
     public function handle()
     {
-        for ($i = 0; $i < 10; $i++) {
-            $params = [
-                'q'      => 'book',
-                'limit'  => 10,
-                'offset' => 0,
-            ];
+        $this->recursive(10, 190);
+    }
 
-            $url = 'https://openlibrary.org/search.json';
+    public function recursive($limit, $offset)
+    {
+        $params = [
+            'q'      => 'book',
+            'limit'  => $limit,
+            'offset' => $offset,
+        ];
 
-            $response = Http::get($url, $params);
+        $url = 'https://openlibrary.org/search.json';
 
-            if ($response->successful()) {
-                $result = $response->json();
+        $response = Http::get($url, $params);
 
-                foreach ($result['docs'] as $item) {
-                    $author = Author::firstOrCreate([
-                        'full_name' => $item['author_name'][0] ?? '',
-                    ]);
+        if ($response->successful()) {
+            $result = $response->json();
 
-                    Book::updateOrCreate([
-                        'author_id' => $author->id,
-                        'title'     => $item['title'],
-                        'url'       => $item['cover_i'] ? "https://covers.openlibrary.org/b/id/{$item['cover_i']}-M.jpg" : null,
-                    ]);
-                }
+            foreach ($result['docs'] as $item) {
+                $author = Author::firstOrCreate([
+                    'full_name' => $item['author_name'][0] ?? '',
+                ]);
+
+                Book::updateOrCreate([
+                    'author_id' => $author->id,
+                    'title'     => $item['title'],
+                    'url'       => $item['cover_i'] ? "https://covers.openlibrary.org/b/id/{$item['cover_i']}-M.jpg" : null,
+                ]);
             }
         }
+
+        $this->recursive($limit, $offset + $limit);
     }
 }
