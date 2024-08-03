@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Actions\Book;
+namespace App\Actions\Author;
 
 use Illuminate\Support\Arr;
 
-class GetBookTitleFromGoogleApiAction
+class GetBookAuthorFromGoogleApiAction
 {
     public function handle($data)
     {
@@ -12,8 +12,7 @@ class GetBookTitleFromGoogleApiAction
 
         foreach (Arr::get($data, 'items', []) as $book) {
             $result[] = [
-                'google_id'    => Arr::get($book, 'id'),
-                'authors'      => Arr::get($book, 'volumeInfo.authors'),
+                'google_id'   => Arr::get($book, 'id'),
                 'title'        => Arr::get($book, 'volumeInfo.title'),
                 'description'  => Arr::get($book, 'volumeInfo.description'),
                 'original_url' => Arr::get($book, 'volumeInfo.previewLink'),
