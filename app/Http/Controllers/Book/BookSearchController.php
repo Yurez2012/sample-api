@@ -7,6 +7,7 @@ use App\Actions\Book\GetBookTitleFromGoogleApiAction;
 use App\Actions\BookAuthor\StoreBookAuthorAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Book\BookSearchRequest;
+use App\Http\Resources\Book\BookResource;
 use App\Http\Resources\BookSearchResource;
 use Illuminate\Support\Arr;
 
@@ -18,7 +19,7 @@ class BookSearchController extends Controller
      * @param GetBookTitleFromGoogleApiAction $bookTitleFromGoogleApiAction
      * @param StoreBookAuthorAction           $storeBookAuthorAction
      *
-     *
+     * @return array
      */
     public function __invoke
     (
@@ -26,7 +27,6 @@ class BookSearchController extends Controller
         GetBookByAuthorAction           $getBookByAuthorAction,
         GetBookTitleFromGoogleApiAction $bookTitleFromGoogleApiAction,
         StoreBookAuthorAction           $storeBookAuthorAction
-
     )
     {
         $data = $bookSearchRequest->validated();
@@ -35,10 +35,10 @@ class BookSearchController extends Controller
 
         $result = $bookTitleFromGoogleApiAction->handle($response);
 
-        $storeBookAuthorAction->handle($result);
+        $books = $storeBookAuthorAction->handle($result);
 
         return [
-            'books' => Arr::pluck($result, 'title')
+            'books' => BookResource::collection($books)
         ];
     }
 }

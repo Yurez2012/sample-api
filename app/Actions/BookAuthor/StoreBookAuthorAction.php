@@ -10,6 +10,8 @@ class StoreBookAuthorAction
 {
     public function handle($data)
     {
+        $result = [];
+
         foreach ($data as $datum) {
             foreach ($datum['authors'] as $author) {
                 $author = Author::updateOrCreate([
@@ -19,6 +21,10 @@ class StoreBookAuthorAction
 
             $book = Book::updateOrCreate(Arr::except($datum, 'authors'));
             $book->authors()->sync([$author->id], false);
+
+            $result[] = $book;
         }
+
+        return $result;
     }
 }

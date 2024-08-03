@@ -11,15 +11,11 @@ class GetBookAuthorFromGoogleApiAction
         $result = [];
 
         foreach (Arr::get($data, 'items', []) as $book) {
-            $result[] = [
-                'google_id'   => Arr::get($book, 'id'),
-                'title'        => Arr::get($book, 'volumeInfo.title'),
-                'description'  => Arr::get($book, 'volumeInfo.description'),
-                'original_url' => Arr::get($book, 'volumeInfo.previewLink'),
-                'url'          => Arr::get($book, 'volumeInfo.imageLinks.thumbnail'),
-            ];
+            foreach (Arr::get($book, 'volumeInfo.authors') as $author) {
+                $result[] = $author;
+            }
         }
 
-        return $result;
+        return array_unique($result);
     }
 }
