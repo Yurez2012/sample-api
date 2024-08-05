@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Category;
+namespace App\Http\Controllers\Collection;
 
-use App\Actions\BookAuthor\StoreCollectionAction;
+use App\Actions\Collection\StoreCollectionAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Collection\StoreCollectionRequest;
-use App\Repositories\CategoryRepository;
 use Illuminate\Support\Arr;
 
 class CollectionController extends Controller

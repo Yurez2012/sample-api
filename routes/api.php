@@ -4,7 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Author\AuthorSearchController;
 use App\Http\Controllers\Book\BookSearchController;
 use App\Http\Controllers\Category\CategoryController;
-use App\Http\Controllers\Category\CollectionController;
+use App\Http\Controllers\Collection\CollectionController;
 use App\Http\Controllers\User\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,5 +17,5 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/book_search', BookSearchController::class);
     Route::get('/author_search', AuthorSearchController::class);
 
-    Route::post('/collection', CollectionController::class);
+    Route::post('/collection', [CollectionController::class, 'store']);
 });
