@@ -13,16 +13,18 @@ class StoreBookAuthorAction
         $result = [];
 
         foreach ($data as $datum) {
-            foreach ($datum['authors'] as $author) {
-                $author = Author::updateOrCreate([
-                    'full_name' => $author
-                ]);
+            if($datum['authors'] && $datum['description']) {
+                foreach ($datum['authors'] as $author) {
+                    $author = Author::updateOrCreate([
+                        'full_name' => $author
+                    ]);
+                }
+
+                $book = Book::updateOrCreate(Arr::except($datum, 'authors'));
+                $book->authors()->sync([$author->id], false);
+
+                $result[] = $book;
             }
-
-            $book = Book::updateOrCreate(Arr::except($datum, 'authors'));
-            $book->authors()->sync([$author->id], false);
-
-            $result[] = $book;
         }
 
         return $result;

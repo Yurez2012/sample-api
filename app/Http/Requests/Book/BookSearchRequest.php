@@ -11,7 +11,11 @@ class BookSearchRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        echo '<pre>';
+        print_r(auth()->user());
+        echo '</pre>';
+        die;
+        return auth()->check();
     }
 
     /**

@@ -4,16 +4,16 @@ namespace App\Actions\Book;
 
 use GuzzleHttp\Client;
 
-class GetBookByAuthorAction
+class GetBookByNameAction
 {
-    public function handle($author)
+    public function handle($name)
     {
         $client = new Client();
         $apiKey = env('GOOGLE_API');
 
         $response = $client->get(env('GOOGLE_URL'), [
             'query' => [
-                'q'            => 'inauthor:' . $author,
+                'q'            => $name,
                 'key'          => $apiKey,
                 'langRestrict' => 'uk|en',
             ],

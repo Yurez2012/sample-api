@@ -10,15 +10,18 @@ class GetBookTitleFromGoogleApiAction
     {
         $result = [];
 
+
         foreach (Arr::get($data, 'items', []) as $book) {
-            $result[] = [
-                'google_id'    => Arr::get($book, 'id'),
-                'authors'      => Arr::get($book, 'volumeInfo.authors'),
-                'title'        => Arr::get($book, 'volumeInfo.title'),
-                'description'  => Arr::get($book, 'volumeInfo.description'),
-                'original_url' => Arr::get($book, 'volumeInfo.previewLink'),
-                'url'          => Arr::get($book, 'volumeInfo.imageLinks.thumbnail'),
-            ];
+            if(Arr::get($book, 'volumeInfo.language') == 'uk') {
+                $result[] = [
+                    'google_id'    => Arr::get($book, 'id'),
+                    'authors'      => Arr::get($book, 'volumeInfo.authors'),
+                    'title'        => Arr::get($book, 'volumeInfo.title'),
+                    'description'  => Arr::get($book, 'volumeInfo.description'),
+                    'original_url' => Arr::get($book, 'volumeInfo.previewLink'),
+                    'url'          => Arr::get($book, 'volumeInfo.imageLinks.thumbnail'),
+                ];
+            }
         }
 
         return $result;

@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('google_id');
             $table->string('title');
-            $table->text('description');
-            $table->text('original_url');
-            $table->string('url');
+            $table->text('description')->nullable(true);
+            $table->text('original_url')->nullable(true);
+            $table->string('url')->nullable(true);
             $table->timestamps();
         });
     }
