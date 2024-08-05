@@ -18,4 +18,5 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/author_search', AuthorSearchController::class);
 
     Route::post('/collection', [CollectionController::class, 'store']);
+    Route::get('/collection', [CollectionController::class, 'index']);
 });

@@ -31,4 +31,18 @@ class UserRepository extends Repository
             ->where('facebook_uuid', $facebokUUID)
             ->first();
     }
+
+    /**
+     * @param $id
+     * @param $relation
+     *
+     * @return mixed
+     */
+    public function getUserById($id, $relation = [])
+    {
+        return $this->model
+            ->with($relation)
+            ->where('id', $id)
+            ->get();
+    }
 }
