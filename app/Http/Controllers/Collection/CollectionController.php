@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Collection;
 
+use App\Actions\Collection\PrepareCollectionAction;
 use App\Actions\Collection\StoreCollectionAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Collection\StoreCollectionRequest;
@@ -15,14 +16,14 @@ class CollectionController extends Controller
      *
      * @return array
      */
-    public function index(CollectionRepository $collectionRepository)
+    public function index(CollectionRepository $collectionRepository, PrepareCollectionAction $prepareCollectionAction)
     {
         $collections = $collectionRepository->getCollectionByUserId(auth()->user()->id, 'model')
             ->groupBy('type')
             ->toArray();
 
         return [
-            'collections' => $collections
+            'collections' => [$prepareCollectionAction->handle($collections)]
         ];
     }
 
