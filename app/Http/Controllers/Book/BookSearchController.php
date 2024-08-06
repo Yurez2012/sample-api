@@ -24,7 +24,7 @@ class BookSearchController extends Controller
     public function __invoke
     (
         BookSearchRequest               $bookSearchRequest,
-        GetBookByNameAction           $getBookByAuthorAction,
+        GetBookByNameAction             $getBookByAuthorAction,
         GetBookTitleFromGoogleApiAction $bookTitleFromGoogleApiAction,
         StoreBookAuthorAction           $storeBookAuthorAction
     )
@@ -38,7 +38,7 @@ class BookSearchController extends Controller
         $books = $storeBookAuthorAction->handle($result);
 
         return [
-            'books' => BookResource::collection($books)
+            'books' => BookResource::collection($books),
         ];
     }
 }

@@ -12,9 +12,10 @@ use Illuminate\Support\Arr;
 class CollectionController extends Controller
 {
     /**
-     * @param CollectionRepository $collectionRepository
+     * @param CollectionRepository    $collectionRepository
+     * @param PrepareCollectionAction $prepareCollectionAction
      *
-     * @return array
+     * @return array[]
      */
     public function index(CollectionRepository $collectionRepository, PrepareCollectionAction $prepareCollectionAction)
     {
