@@ -43,6 +43,6 @@ class UserRepository extends Repository
         return $this->model
             ->with($relation)
             ->where('id', $id)
-            ->get();
+            ->first();
     }
 }
