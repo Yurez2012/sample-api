@@ -5,6 +5,7 @@ use App\Http\Controllers\Author\AuthorSearchController;
 use App\Http\Controllers\Book\BookSearchController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Collection\CollectionController;
+use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\User\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +14,8 @@ Route::get('/category', [CategoryController::class, 'index']);
 
 
 Route::middleware('auth:api')->group(function () {
+    Route::get('/home', [HomeController::class, 'index']);
+
     Route::get('/profile', ProfileController::class);
     Route::get('/book_search', BookSearchController::class);
     Route::get('/author_search', AuthorSearchController::class);

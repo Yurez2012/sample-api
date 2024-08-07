@@ -21,6 +21,18 @@ class CollectionRepository extends Repository
     }
 
     /**
+     * @param $relation
+     *
+     * @return mixed
+     */
+    public function getAllCollection($relation = [])
+    {
+        return $this->model
+            ->with($relation)
+            ->get();
+    }
+
+    /**
      * @param $id
      * @param $relation
      *
