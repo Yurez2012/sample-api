@@ -23,6 +23,7 @@ class Collection extends Model
         'user_id',
         'model_id',
         'model_type',
+        'rating',
     ];
 
 

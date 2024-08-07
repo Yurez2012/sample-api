@@ -7,6 +7,7 @@ use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Collection\CollectionController;
 use App\Http\Controllers\Friend\FriendController;
 use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\Rating\RatingController;
 use App\Http\Controllers\User\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,4 +26,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/collection', [CollectionController::class, 'index']);
 
     Route::get('/friend', [FriendController::class, 'index']);
+
+    Route::get('/rating', [RatingController::class, 'index']);
+    Route::get('/rating/{category}', [RatingController::class, 'view']);
 });

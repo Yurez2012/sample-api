@@ -45,4 +45,19 @@ class CollectionRepository extends Repository
             ->where('user_id', $id)
             ->get();
     }
+
+    /**
+     * @param $category
+     * @param $relation
+     *
+     * @return mixed
+     */
+    public function getCollectionByCategory($category, $relation = [])
+    {
+        return $this->model
+            ->with($relation)
+            ->where('user_id', auth()->user()->id)
+            ->where('model_type', $category)
+            ->get();
+    }
 }
