@@ -14,6 +14,21 @@ class RatingUpdateRequest extends FormRequest
         return auth()->check();
     }
 
+    protected function prepareForValidation()
+    {
+        if((int)$this->rating > 10) {
+            $this->merge([
+                'rating' => 10,
+            ]);
+        }
+
+        if((int)$this->rating < 0) {
+            $this->merge([
+                'rating' => 0,
+            ]);
+        }
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -22,7 +37,7 @@ class RatingUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'rating' => ['required', 'numeric', 'min:0', 'max:10'],
+            'rating' => ['required', 'numeric'],
         ];
     }
 }

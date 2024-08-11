@@ -41,8 +41,14 @@ class RatingController extends Controller
         ];
     }
 
-    public function update(Collection $collection, RatingUpdateRequest $request, CollectionService $collectionService)
+    public function update(Collection $collection, RatingUpdateRequest $request, CollectionService $collectionService, CollectionRepository $collectionRepository)
     {
         $collectionService->update($collection, $request->all());
+
+        $collections = $collectionRepository->getCollectionByCategory($collection->model_type, ['model']);
+
+        return [
+            'collections' => $collections
+        ];
     }
 }
