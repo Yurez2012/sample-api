@@ -29,4 +29,5 @@ Route::middleware('auth:api')->group(function () {
 
     Route::get('/rating', [RatingController::class, 'index']);
     Route::get('/rating/{category}', [RatingController::class, 'view']);
+    Route::put('/rating/{collection}', [RatingController::class, 'update']);
 });
