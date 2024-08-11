@@ -12,7 +12,7 @@ class GetBookTitleFromGoogleApiAction
 
 
         foreach (Arr::get($data, 'items', []) as $book) {
-            if(Arr::get($book, 'volumeInfo.language') == 'uk') {
+            if(Arr::get($book, 'volumeInfo.language') == 'uk' || Arr::get($book, 'volumeInfo.language') == 'en') {
                 $result[] = [
                     'google_id'    => Arr::get($book, 'id'),
                     'authors'      => Arr::get($book, 'volumeInfo.authors'),
