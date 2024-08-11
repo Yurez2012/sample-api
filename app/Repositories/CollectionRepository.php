@@ -29,6 +29,7 @@ class CollectionRepository extends Repository
     {
         return $this->model
             ->with($relation)
+            ->orderBy('id', 'desc')
             ->get();
     }
 
@@ -43,6 +44,7 @@ class CollectionRepository extends Repository
         return $this->model
             ->with($relation)
             ->where('user_id', $id)
+            ->orderBy('rating', 'desc')
             ->get();
     }
 
