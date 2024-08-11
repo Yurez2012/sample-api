@@ -58,6 +58,7 @@ class CollectionRepository extends Repository
             ->with($relation)
             ->where('user_id', auth()->user()->id)
             ->where('model_type', $category)
+            ->orderBy('rating', 'desc')
             ->get();
     }
 }
