@@ -30,6 +30,7 @@ class CollectionRepository extends Repository
         return $this->model
             ->with($relation)
             ->orderBy('id', 'desc')
+            ->whereIn('user_id', auth()->user()->friends->pluck('friend_id'))
             ->get();
     }
 
