@@ -23,7 +23,7 @@ class ParseStoreFriendAction
             foreach (Arr::get($items, 'data', []) as $user) {
                 $friend = $userRepository->getUserByFacebookUUID($user['id']);
 
-                auth()->user()->friends()->sync([$friend->id], false);
+                auth()->user()->friends()->updateOrCreate(['friend_id' => $friend->id]);
             }
         }
     }
